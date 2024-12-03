@@ -10,7 +10,9 @@ public class Day02_Part1 {
         int safe = 0;
         for (int i = 0; i < fileData.size(); i++){
             String[] levels = fileData.get(i).split(" ");
-            
+            for (int j = 0; j < levels.length; j++){
+                
+            }
         }
     }
 
