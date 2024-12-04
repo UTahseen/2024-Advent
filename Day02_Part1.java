@@ -10,10 +10,27 @@ public class Day02_Part1 {
         int safe = 0;
         for (int i = 0; i < fileData.size(); i++){
             String[] levels = fileData.get(i).split(" ");
-            for (int j = 0; j < levels.length; j++){
-                
+            int last = Integer.parseInt(levels[0]);
+            int direction = 0;
+            boolean currentSafe = false;
+            for (int j = 1; j < levels.length; j++){
+                currentSafe = false;
+                int current = Integer.parseInt(levels[j]);
+                if (Math.abs(current - last) > 3) break;
+                else{
+                    if (current - last > 0 && direction < 0) break;
+                    else if (current - last < 0 && direction > 0) break;
+                    else if (current - last == 0) break;
+                    else{
+                        direction = current - last;
+                        currentSafe = true;
+                        last = current;
+                    }
+                }
             }
+            if (currentSafe) safe++;
         }
+        System.out.println(safe);
     }
 
     public static ArrayList<String> getFileData(String fileName) {
