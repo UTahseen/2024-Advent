@@ -9,19 +9,19 @@ public class Day02_Part2 {
         ArrayList<String> fileData = getFileData("src/Day2Input.txt");
         int safe = 0;
         for (int i = 0; i < fileData.size(); i++){
-            String[] levels = fileData.get(i).split(" ");
-            int last = Integer.parseInt(levels[0]);
+            String[] levelsArr = fileData.get(i).split(" ");
+            int last = Integer.parseInt(levelsArr[0]);
             int direction;
             int lastDir = 0;
             boolean currentSafe = false;
             boolean tolerated = false;
-            ArrayList<Integer> levelsArr = new ArrayList<>();
-            for (int j = 0; j < levels.length; j++){
-                levelsArr.add(Integer.parseInt(levels[j]));
+            ArrayList<Integer> levels = new ArrayList<>();
+            for (int j = 0; j < levelsArr.length; j++){
+                levels.add(Integer.parseInt(levelsArr[j]));
             }
-            for (int j = 1; j < levelsArr.size(); j++){
+            for (int j = 1; j < levels.size(); j++){
                 currentSafe = false;
-                int current = levelsArr.get(j);
+                int current = levels.get(j);
                 direction = current - last;
                 if (direction <= 3 && direction >= -3 && direction != 0 && !(direction > 0 && lastDir < 0) && !(direction < 0 && lastDir > 0)){
                     currentSafe = true;
@@ -29,31 +29,38 @@ public class Day02_Part2 {
                     lastDir = direction;
                 }
                 else if (!tolerated){
-                    if (j == levels.length - 1){
+                    tolerated = true;
+                    if (j == levels.size() - 1){
                         currentSafe = true;
-                        tolerated = true;
                     }
                     else if (j == 1){
                         j++;
-                        current = Integer.parseInt(levels[j]);
+                        current = levels.get(j);
                         direction = current - last;
                         if (direction <= 3 && direction >= -3 && direction != 0){
                             currentSafe = true;
                             last = current;
                             lastDir = direction;
-                            tolerated = true;
                         }
-                        else break;
+                        else{
+                            last = levels.get(j-1);
+                            direction = current - last;
+                            if (direction <= 3 && direction >= -3 && direction != 0){
+                                currentSafe = true;
+                                last = current;
+                                lastDir = direction;
+                            }
+                            else break;
+                        }
                     }
-                    else {
+                    else{
                         j++;
-                        current = Integer.parseInt(levels[j]);
+                        current = levels.get(j);
                         direction = current - last;
-                        if (direction <= 3 && direction >= -3 && direction != 0 && !(direction > 0 && lastDir < 0) && !(direction < 0 && lastDir > 0)){
+                        if (direction <= 3 && direction >= -3 && direction != 0){
                             currentSafe = true;
                             last = current;
                             lastDir = direction;
-                            tolerated = true;
                         }
                         else break;
                     }
