@@ -5,71 +5,45 @@ import java.util.Scanner;
 
 public class Day02_Part2 {
     public static void main(String[] args) {
-
         ArrayList<String> fileData = getFileData("src/Day2Input.txt");
         int safe = 0;
         for (int i = 0; i < fileData.size(); i++){
             String[] levelsArr = fileData.get(i).split(" ");
-            int last = Integer.parseInt(levelsArr[0]);
-            int direction;
-            int lastDir = 0;
-            boolean currentSafe = false;
-            boolean tolerated = false;
             ArrayList<Integer> levels = new ArrayList<>();
             for (int j = 0; j < levelsArr.length; j++){
                 levels.add(Integer.parseInt(levelsArr[j]));
             }
-            for (int j = 1; j < levels.size(); j++){
-                currentSafe = false;
-                int current = levels.get(j);
-                direction = current - last;
-                if (direction <= 3 && direction >= -3 && direction != 0 && !(direction > 0 && lastDir < 0) && !(direction < 0 && lastDir > 0)){
-                    currentSafe = true;
-                    last = current;
-                    lastDir = direction;
-                }
-                else if (!tolerated){
-                    tolerated = true;
-                    if (j == levels.size() - 1){
-                        currentSafe = true;
+            if (checkLevel(levels)) safe++;
+            else {
+                for (int j = 0; j < levels.size(); j++){
+                    ArrayList<Integer> toleration = new ArrayList<>();
+                    for (int k = 0; k < levelsArr.length; k++){
+                        toleration.add(Integer.parseInt(levelsArr[k]));
                     }
-                    else if (j == 1){
-                        j++;
-                        current = levels.get(j);
-                        direction = current - last;
-                        if (direction <= 3 && direction >= -3 && direction != 0){
-                            currentSafe = true;
-                            last = current;
-                            lastDir = direction;
-                        }
-                        else{
-                            last = levels.get(j-1);
-                            direction = current - last;
-                            if (direction <= 3 && direction >= -3 && direction != 0){
-                                currentSafe = true;
-                                last = current;
-                                lastDir = direction;
-                            }
-                            else break;
-                        }
-                    }
-                    else{
-                        j++;
-                        current = levels.get(j);
-                        direction = current - last;
-                        if (direction <= 3 && direction >= -3 && direction != 0){
-                            currentSafe = true;
-                            last = current;
-                            lastDir = direction;
-                        }
-                        else break;
+                    toleration.remove(j);
+                    if (checkLevel(toleration)){
+                        safe++;
+                        break;
                     }
                 }
-                else break;
             }
-            if (currentSafe) safe++;
         }
         System.out.println(safe);
+    }
+
+    public static Boolean checkLevel(ArrayList<Integer> levels){
+        int last = levels.get(0);
+        int lastDir = 0;
+        for (int j = 1; j < levels.size(); j++){
+            int current = levels.get(j);
+            int direction = current - last;
+            if (direction <= 3 && direction >= -3 && direction != 0 && !(direction > 0 && lastDir < 0) && !(direction < 0 && lastDir > 0)){
+                last = current;
+                lastDir = direction;
+            }
+            else return false;
+        }
+        return true;
     }
 
     public static ArrayList<String> getFileData(String fileName) {
