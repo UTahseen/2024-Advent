@@ -15,10 +15,15 @@ public class Day04_Part1 {
         int appearances = 0;
         for (int r = 0; r < wordSearch.length; r++){
             for (int c = 0; c < wordSearch[r].length; c++){
-                if (wordSearch[r][c] == 'x'){
-                    if (c < wordSearch[r].length - 3){
-                        if (wordSearch[r][c+1] == 'm' && wordSearch[r][c+2] == 'a' && wordSearch[r][c+3] == 's') appearances++;
-                    }
+                if (wordSearch[r][c] == 'X'){
+                    if (c < wordSearch[r].length-3 && wordSearch[r][c+1] == 'M' && wordSearch[r][c+2] == 'A' && wordSearch[r][c+3] == 'S') appearances++;
+                    if (r < wordSearch.length-3 && wordSearch[r+1][c] == 'M' && wordSearch[r+2][c] == 'A' && wordSearch[r+3][c] == 'S') appearances++;
+                    if (c > 2 && wordSearch[r][c-1] == 'M' && wordSearch[r][c-2] == 'A' && wordSearch[r][c-3] == 'S') appearances++;
+                    if (r > 2 && wordSearch[r-1][c] == 'M' && wordSearch[r-2][c] == 'A' && wordSearch[r-3][c] == 'S') appearances++;
+                    if (c < wordSearch[r].length-3 && r < wordSearch.length-3 && wordSearch[r+1][c+1] == 'M' && wordSearch[r+2][c+2]== 'A' && wordSearch[r+3][c+3] == 'S') appearances++;
+                    if (c < wordSearch[r].length-3 && r > 2 && wordSearch[r-1][c+1] == 'M' && wordSearch[r-2][c+2]== 'A' && wordSearch[r-3][c+3] == 'S') appearances++;
+                    if (c > 2 && r < wordSearch.length-3 && wordSearch[r+1][c-1] == 'M' && wordSearch[r+2][c-2]== 'A' && wordSearch[r+3][c-3] == 'S') appearances++;
+                    if (c > 2 && r > 2 && wordSearch[r-1][c-1] == 'M' && wordSearch[r-2][c-2]== 'A' && wordSearch[r-3][c-3] == 'S') appearances++;
                 }
             }
         }
