@@ -17,7 +17,9 @@ public class Day04_Part2 {
             for (int c = 1; c < wordSearch[r].length-1; c++){
                 if (wordSearch[r][c] == 'A'){
                     if ((wordSearch[r+1][c+1] == 'M' || wordSearch[r+1][c+1] == 'S') && (wordSearch[r-1][c-1] == 'M' || wordSearch[r-1][c-1] == 'S') && wordSearch[r+1][c+1] != wordSearch[r-1][c-1]){
-
+                        if ((wordSearch[r+1][c-1] == 'M' || wordSearch[r+1][c-1] == 'S') && (wordSearch[r-1][c+1] == 'M' || wordSearch[r-1][c+1] == 'S') && wordSearch[r+1][c-1] != wordSearch[r-1][c+1]){
+                            appearances++;
+                        }
                     }
                 }
             }
