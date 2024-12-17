@@ -16,19 +16,18 @@ public class Day05_Part1 {
         for (String str : pages){
             boolean good = true;
             for (int i = 0; i < rules.size(); i++){
-                String[] values = rules.get(i).split("|");
-                if (str.indexOf(values[2]) >= 0 && str.indexOf(values[0]) > str.indexOf(values[2])){
+                String[] values = rules.get(i).split("\\|");
+                if (str.indexOf(values[1]) >= 0 && str.indexOf(values[0]) > str.indexOf(values[1])){
                     good = false;
                     break;
                 }
             }
             if (good){
                 String[] updates = str.split (",");
-                sum += Integer.parseInt(updates[updates.length / 2 - 1]);
+                sum += Integer.parseInt(updates[updates.length / 2]);
             }
         }
         System.out.println(sum);
-        // x < 11197
     }
 
     public static ArrayList<String> getFileData(String fileName) {
