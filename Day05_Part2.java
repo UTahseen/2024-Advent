@@ -33,14 +33,17 @@ public class Day05_Part2 {
         for (int i = 0; i < updates.length; i++){
             for (String rule : rules){
                 String[] rulesArr = rule.split("\\|");
-                int num = Integer.parseInt(rulesArr[0]);
-                if (num == Integer.parseInt(updates[i])) appearances[i]++;
+                int firstNum = Integer.parseInt(rulesArr[0]);
+                int secondNum = Integer.parseInt(rulesArr[1]);
+                if (update.contains(Integer.toString(firstNum)) && update.contains(Integer.toString(secondNum))){
+                    if (firstNum == Integer.parseInt(updates[i])) appearances[i]++;
+                }
             }
         }
         for (int i = 0; i < appearances.length; i++){
             int max = appearances[i];
             int index = i;
-            for (int j = i+1; j < appearances.length-1; j++){
+            for (int j = i+1; j < appearances.length; j++){
                 if (appearances[j] > max){
                     max = appearances[j];
                     index = j;
@@ -53,9 +56,6 @@ public class Day05_Part2 {
             appearances[index] = temp;
             updates[index] = tempStr;
         }
-        String test = "";
-        for (int str : appearances) test += str + ",";
-        System.out.println(test);
         return updates;
     }
 
